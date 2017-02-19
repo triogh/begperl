@@ -22,6 +22,8 @@ use strict;
 use warnings;
 use utf8;
 
+use Data::Dumper qw/ Dumper /;
+
 
 package WgetCmd;
 
@@ -35,6 +37,8 @@ sub new {
     my $self = {
         cmd => 'wget',
         head => '--spider',
+        download => '-O',
+        devnull => '/dev/null',
         headers => '-S',
         url => $arg->{url} ? $arg->{url} : 'https://en.wikipedia.org/wiki/Object-oriented_programming',
         };
@@ -48,15 +52,16 @@ sub show {
     print $self->{cmd}, ' ' , $self->{head}, ' ', $self->{headers}, ' ', $self->{url}, "\n";
 }
 
-sub return_aref {
+sub cmd_aref {
     my $self = shift;
-    push my @cmd, $self->{cmd}, $self->{head}, $self->{headers}, $self->{url};
+    #push my @cmd, $self->{cmd}, $self->{head}, $self->{headers}, $self->{url};
+    push my @cmd, $self->{cmd}, $self->{download}, $self->{devnull}, $self->{headers}, $self->{url};
     return \@cmd;
 }
 
 sub execute {
     my $self = shift;
-    system( @{ $self->return_aref() } );
+    system( @{ $self->cmd_aref() } );
 }
 
 package main;
@@ -64,6 +69,7 @@ package main;
 
 my $wget_cmd = WgetCmd->new( {url => 'http://lxer.com'} );
 $wget_cmd->show();
-my $cmd_aref = $wget_cmd->return_aref();
+my $cmd_aref = $wget_cmd->cmd_aref();
 print "@$cmd_aref", "\n";
+print Dumper $cmd_aref;
 $wget_cmd->execute();
