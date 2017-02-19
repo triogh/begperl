@@ -37,11 +37,11 @@ sub new {
     my $self = {
         cmd => 'wget',
         op_head => '--spider',
-        download => $arg->{download} ? $arg->{download} : undef,
+        download => $arg->{download} || undef,
         op_download => '-O',
         devnull => '/dev/null',
         headers => '-S',
-        url => $arg->{url} ? $arg->{url} : 'https://en.wikipedia.org/wiki/Object-oriented_programming',
+        url => $arg->{url} || 'https://en.wikipedia.org/wiki/Object-oriented_programming',
         };
 
     bless $self, $class;
@@ -82,15 +82,21 @@ sub execute {
 package main;
 
 
-my $wget_cmd = WgetCmd->new( {url => 'http://lxer.com'} );
+my $wget_cmd = WgetCmd->new();
+my $wget_cmd_lxer = WgetCmd->new( {url => 'http://lxer.com'} );
 my $wget_cmd_download = WgetCmd->new( { url => 'http://lxer.com', download => 1 } );
 $wget_cmd->show();
+$wget_cmd_lxer->show();
 $wget_cmd_download->show();
 my $cmd_aref = $wget_cmd->cmd_aref();
+my $cmd_aref_lxer = $wget_cmd_lxer->cmd_aref();
 my $cmd_aref_download = $wget_cmd_download->cmd_aref();
 print "@$cmd_aref", "\n";
+print "@$cmd_aref_lxer", "\n";
 print "@$cmd_aref_download", "\n";
 print Dumper $cmd_aref;
+print Dumper $cmd_aref_lxer;
 print Dumper $cmd_aref_download;
 $wget_cmd->execute();
+$wget_cmd_lxer->execute();
 $wget_cmd_download->execute();
