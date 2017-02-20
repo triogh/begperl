@@ -56,6 +56,21 @@ sub get_download   { my $self = shift; return $self->{download} }
 sub get_save_to    { my $self = shift; return $self->{save_to} }
 sub get_url        { my $self = shift; return $self->{url} }
 
+sub set_save_to {
+    my ( $self, $save_to ) = @_;
+    $self->{save_to} = $save_to if $save_to;
+}
+
+sub set_download {
+    my ( $self, $download ) = @_;
+    $self->{download} = $download if $download;
+}
+
+sub set_url {
+    my ( $self, $url ) = @_;
+    $self->{url} = $url if $url;
+}
+
 sub get_cmd_aref {
     my $self = shift;
 
@@ -97,6 +112,10 @@ print Dumper $cmd_aref_download;
 $wget_cmd->system_exec;
 $wget_cmd_lxer->system_exec;
 $wget_cmd_download->system_exec;
+
 print $wget_cmd->get_name, "\n";
 print $wget_cmd->get_url, "\n";
 print $wget_cmd_lxer->get_url, "\n";
+
+$wget_cmd->set_url('https://stackoverflow.com/questions/tagged/perl');
+print $wget_cmd->get_url, "\n";
