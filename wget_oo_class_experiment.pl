@@ -48,18 +48,6 @@ sub new {
     return $self;
 }
 
-sub print_cmd_string {
-    my $self = shift;
-
-    my @cmd;
-    if ($self->{download}) {
-        push @cmd, $self->{cmd}, $self->{opt_O}, $self->{save_to}, $self->{opt_S}, $self->{url};
-    }
-    else {
-        push @cmd, $self->{cmd}, $self->{opt_spider}, $self->{opt_S}, $self->{url};
-    }
-    print "@cmd\n";
-}
 
 sub get_cmd_aref {
     my $self = shift;
@@ -71,6 +59,7 @@ sub get_cmd_aref {
     else {
         push @cmd, $self->{cmd}, $self->{opt_spider}, $self->{opt_S}, $self->{url};
     }
+
     return \@cmd;
 }
 
@@ -85,10 +74,6 @@ package main;
 my $wget_cmd            = WgetCmd->new();
 my $wget_cmd_lxer       = WgetCmd->new( { url => 'http://lxer.com' } );
 my $wget_cmd_download   = WgetCmd->new( { url => 'http://lxer.com', download => 1 } );
-
-$wget_cmd->print_cmd_string();
-$wget_cmd_lxer->print_cmd_string();
-$wget_cmd_download->print_cmd_string();
 
 my $cmd_aref            = $wget_cmd->get_cmd_aref();
 my $cmd_aref_lxer       = $wget_cmd_lxer->get_cmd_aref();
