@@ -71,13 +71,13 @@ sub system_exec {
 package main;
 
 
-my $wget_cmd            = WgetCmd->new();
+my $wget_cmd            = WgetCmd->new;
 my $wget_cmd_lxer       = WgetCmd->new( { url => 'http://lxer.com' } );
 my $wget_cmd_download   = WgetCmd->new( { url => 'http://lxer.com', download => 1 } );
 
-my $cmd_aref            = $wget_cmd->get_cmd_aref();
-my $cmd_aref_lxer       = $wget_cmd_lxer->get_cmd_aref();
-my $cmd_aref_download   = $wget_cmd_download->get_cmd_aref();
+my $cmd_aref            = $wget_cmd->get_cmd_aref;
+my $cmd_aref_lxer       = $wget_cmd_lxer->get_cmd_aref;
+my $cmd_aref_download   = $wget_cmd_download->get_cmd_aref;
 
 print "@$cmd_aref", "\n";
 print "@$cmd_aref_lxer", "\n";
@@ -87,6 +87,6 @@ print Dumper $cmd_aref;
 print Dumper $cmd_aref_lxer;
 print Dumper $cmd_aref_download;
 
-$wget_cmd->system_exec();
-$wget_cmd_lxer->system_exec();
-$wget_cmd_download->system_exec();
+$wget_cmd->system_exec;
+$wget_cmd_lxer->system_exec;
+$wget_cmd_download->system_exec;
