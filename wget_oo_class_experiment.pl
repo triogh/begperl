@@ -35,7 +35,7 @@ sub new {
     my $arg = shift;
 
     my $self = {
-        cmd        => 'wget',
+        name       => 'wget',
         opt_spider => '--spider',
         opt_O      => '-O',
         opt_S      => '-S',
@@ -48,16 +48,23 @@ sub new {
     return $self;
 }
 
+sub get_name       { my $self = shift; return $self->{name} }
+sub get_opt_spider { my $self = shift; return $self->{opt_spider} }
+sub get_opt_O      { my $self = shift; return $self->{opt_O} }
+sub get_opt_S      { my $self = shift; return $self->{opt_S} }
+sub get_download   { my $self = shift; return $self->{download} }
+sub get_save_to    { my $self = shift; return $self->{save_to} }
+sub get_url        { my $self = shift; return $self->{url} }
 
 sub get_cmd_aref {
     my $self = shift;
 
     my @cmd;
     if ($self->{download}) {
-        push @cmd, $self->{cmd}, $self->{opt_O}, $self->{save_to}, $self->{opt_S}, $self->{url};
+        push @cmd, $self->{name}, $self->{opt_O}, $self->{save_to}, $self->{opt_S}, $self->{url};
     }
     else {
-        push @cmd, $self->{cmd}, $self->{opt_spider}, $self->{opt_S}, $self->{url};
+        push @cmd, $self->{name}, $self->{opt_spider}, $self->{opt_S}, $self->{url};
     }
 
     return \@cmd;
@@ -90,3 +97,6 @@ print Dumper $cmd_aref_download;
 $wget_cmd->system_exec;
 $wget_cmd_lxer->system_exec;
 $wget_cmd_download->system_exec;
+print $wget_cmd->get_name, "\n";
+print $wget_cmd->get_url, "\n";
+print $wget_cmd_lxer->get_url, "\n";
