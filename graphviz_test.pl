@@ -22,6 +22,7 @@ use strict;
 use warnings;
 use utf8;
 
+# external dependencies, sudo apt-get graphviz libgraphviz-perl
 use GraphViz;
 
 my $g = GraphViz->new();
